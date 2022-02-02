@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import AppRoutes from "./AppRoutes";
 import "bootstrap/dist/css/bootstrap.min.css";
+import 'font-awesome/css/font-awesome.min.css';
 // import "bootstrap/dist/js/bootstrap.js";
 
 // import "./styles.min.css";

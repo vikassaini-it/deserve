@@ -5,7 +5,6 @@ export default {
   //												STATE
   //--------------------------------------------------------------------------------------------------
   gridSize: 10,
-  cellLocations: {},
   currentPosition: null,
 
   //--------------------------------------------------------------------------------------------------
@@ -20,7 +19,7 @@ export default {
     state.gridSize = size;
   }),
 
-  setCellLocations: action((state, locations) => {
-    state.cellLocations = locations;
+  setCurrentPosition: action((state, position) => {
+    state.currentPosition = position;
   }),
 };
