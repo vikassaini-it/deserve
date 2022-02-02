@@ -27,16 +27,16 @@ const Player = ({ id }) => {
   function calculatePosition() {
     if (currentPosition != null) {
       setCurrentPositionTop(
-        document.getElementById(currentPosition)?.getBoundingClientRect().top
+        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().top
       );
       setCurrentPositionLeft(
-        document.getElementById(currentPosition)?.getBoundingClientRect().left
+        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().left
       );
       setWidth(
-        document.getElementById(currentPosition)?.getBoundingClientRect().width
+        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().width
       );
       setHeight(
-        document.getElementById(currentPosition)?.getBoundingClientRect().height
+        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().height
       );
     }
   }

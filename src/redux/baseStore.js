@@ -6,6 +6,11 @@ export default {
   //--------------------------------------------------------------------------------------------------
   gridSize: 10,
   currentPosition: null,
+  diceLucks: [],
+  snake: {
+    head: Math.floor(Math.random() * 50 + 49),
+    tail: Math.floor(Math.random() * 48 + 2),
+  },
 
   //--------------------------------------------------------------------------------------------------
   //												THUNKS
@@ -21,5 +26,9 @@ export default {
 
   setCurrentPosition: action((state, position) => {
     state.currentPosition = position;
+  }),
+
+  setDiceLucks: action((state, diceLucks) => {
+    state.diceLucks = diceLucks;
   }),
 };

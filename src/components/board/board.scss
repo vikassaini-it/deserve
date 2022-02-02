@@ -1,4 +1,10 @@
 #board {
+  // transform: rotateX(24deg) rotateZ(-25deg);
+  border-radius: 10px;
+  box-shadow: 3px 3px 1px #0005;
+  overflow: hidden;
+  transform-origin: 0, 0;
+  perspective: 10px;
   .cell {
     width: calc(10vh - 10px);
     height: calc(10vh - 10px);
@@ -10,7 +16,7 @@
       background-color: white;
     }
     &.even {
-      background-color: #518297;
+      background-color: #c0c0c0;
     }
     span {
       font-size: 0.5em;
