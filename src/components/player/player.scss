@@ -1,0 +1,10 @@
+.player {
+  transition: top 1s, left 1s;
+  div {
+    min-width: 50%;
+    min-height: 50%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 10px 10px, #5cabff, #000);
+    box-shadow: 0px 10px 5px #0008;
+  }
+}

@@ -4,8 +4,8 @@ import "./board.scss";
 import Player from "../player/Player";
 const Board = () => {
   const gridSize = useStoreState((state) => state.gridSize);
-  // const setGridSize = useStoreActions((actions) => actions.setGridSize);
-  const setLocations = useStoreActions((actions) => actions.setCellLocations);
+  const setGridSize = useStoreActions((actions) => actions.setGridSize);
+  const setPosition = useStoreActions((actions) => actions.setCurrentPosition);
   const [grid, setGrid] = useState(<></>);
 
   useEffect(() => {
@@ -20,11 +20,11 @@ const Board = () => {
             return (
               <div
                 className={`d-flex justify-content-end cell p-1 ${
-                  (10 * index1 + index2 + 1) % 2 === 0 ? "even" : "odd"
+                  (gridSize * index1 + index2 + 1) % 2 === 0 ? "even" : "odd"
                 }`}
-                id={`CELL_${10 * index1 + index2 + 1}`}
+                id={`CELL_${gridSize * index1 + index2 + 1}`}
               >
-                <span>{10 * index1 + index2 + 1}</span>
+                <span>{gridSize * index1 + index2 + 1}</span>
               </div>
             );
           })}
@@ -35,13 +35,15 @@ const Board = () => {
   }, [gridSize]);
 
   useLayoutEffect(() => {
-    setLocations({});
-  }, [grid]);
-
-  function generateGrid() {}
+    setPosition("CELL_1");
+    setGridSize(10);
+    setTimeout(() => {
+      setPosition("CELL_10");
+    }, 1000);
+  }, []);
 
   return (
-    <div id='board' className={"w-100 d-flex flex-column-reverse"}>
+    <div id='board' className={" d-flex flex-column-reverse"}>
       {grid}
     </div>
   );
