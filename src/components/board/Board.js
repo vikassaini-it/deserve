@@ -2,18 +2,18 @@ import React, { useEffect, useState, useLayoutEffect } from "react";
 import { useStoreState, useStoreActions } from "easy-peasy";
 import "./board.scss";
 
-import snakeHead from "../../assets/images/snakeHead.png";
-import snakeTail from "../../assets/images/snakeTail.png";
+import SnakeHead from "../../assets/images/snakeHead.png";
+import SnakeTail from "../../assets/images/snakeTail.png";
+import Crown from "../../assets/images/crown.png";
 
 const Board = () => {
   const gridSize = useStoreState((state) => state.gridSize);
   const snake = useStoreState((state) => state.snake);
-  const setGridSize = useStoreActions((actions) => actions.setGridSize);
-  const setPosition = useStoreActions((actions) => actions.setCurrentPosition);
   const [grid, setGrid] = useState(<></>);
 
   useEffect(() => {
     let newGrid = [...new Array(gridSize)].map((ele, index1) => {
+      console.log(index1, gridSize);
       return (
         <div
           className={`d-flex justify-content-center ${
@@ -21,6 +21,7 @@ const Board = () => {
           }`}
         >
           {[...new Array(gridSize)].map((ele, index2) => {
+            console.log(index2);
             return (
               <div
                 className={`d-flex justify-content-end cell position-relative p-1 ${
@@ -28,14 +29,21 @@ const Board = () => {
                 }`}
                 id={`CELL_${gridSize * index1 + index2 + 1}`}
               >
-                {snake.head == gridSize * index1 + index2 + 1 ? (
+                {gridSize * index1 + index2 + 1 == gridSize * gridSize ? (
                   <div>
-                    <img className='w-75 snake' src={snakeHead}></img>
+                    <img className='w-75 snake' src={Crown}></img>
                   </div>
                 ) : null}
+
+                {snake.head == gridSize * index1 + index2 + 1 ? (
+                  <div>
+                    <img className='w-75 snake' src={SnakeHead}></img>
+                  </div>
+                ) : null}
+
                 {snake.tail == gridSize * index1 + index2 + 1 ? (
                   <div>
-                    <img className='w-75 snake' src={snakeTail}></img>
+                    <img className='w-75 snake' src={SnakeTail}></img>
                   </div>
                 ) : null}
                 <span>{gridSize * index1 + index2 + 1}</span>
@@ -48,13 +56,17 @@ const Board = () => {
     setGrid(newGrid);
   }, [gridSize]);
 
-  useLayoutEffect(() => {
-    setPosition(1);
-  }, []);
-
   return (
-    <div id='board' className={" d-flex flex-column-reverse"}>
-      {grid}
+    <div
+      id='board-container'
+      className={" d-flex justify-content-center flex-grow-1"}
+    >
+      <div
+        id='board'
+        className='d-flex flex-column-reverse justify-content-center'
+      >
+        {grid}
+      </div>
     </div>
   );
 };

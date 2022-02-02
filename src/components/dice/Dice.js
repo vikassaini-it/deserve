@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import "./dice.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -8,18 +8,22 @@ import {
   faDiceFour,
   faDiceFive,
   faDiceSix,
-  faSnowflake,
 } from "@fortawesome/free-solid-svg-icons";
 import { useStoreState, useStoreActions } from "easy-peasy";
+import { useNavigate } from "react-router-dom";
 
-const Dice = ({ crooked = true }) => {
+const Dice = () => {
   const [rolling, setRolling] = useState(false);
   const [currentDice, setCurrentDice] = useState(1);
   const setPosition = useStoreActions((actions) => actions.setCurrentPosition);
   const setDiceLucks = useStoreActions((actions) => actions.setDiceLucks);
   const currentPosition = useStoreState((state) => state.currentPosition);
   const diceLucks = useStoreState((state) => state.diceLucks);
+  const gridSize = useStoreState((state) => state.gridSize);
+  const totalChances = useStoreState((state) => state.totalChances);
   const snake = useStoreState((state) => state.snake);
+  const crooked = useStoreState((state) => state.crookedDice);
+  const navigate = useNavigate();
 
   const diceMap = {
     1: faDiceOne,
@@ -30,6 +34,10 @@ const Dice = ({ crooked = true }) => {
     6: faDiceSix,
   };
 
+  useLayoutEffect(() => {
+    setPosition(1);
+  }, []);
+
   function shuffelDice() {
     setRolling(true);
     setTimeout(() => {
@@ -38,7 +46,9 @@ const Dice = ({ crooked = true }) => {
       diceLucks.push(newDice);
       setDiceLucks(diceLucks);
       setPosition(
-        currentPosition + newDice > 100 ? 100 : currentPosition + newDice
+        currentPosition + newDice > gridSize * gridSize
+          ? gridSize * gridSize
+          : currentPosition + newDice
       );
       setRolling(false);
     }, 500);
@@ -48,16 +58,9 @@ const Dice = ({ crooked = true }) => {
     if (currentPosition === snake?.head) {
       setTimeout(() => {
         setPosition(snake.tail);
-      }, 500);
+      }, 800);
     }
   }, [currentPosition]);
-
-  useEffect(() => {
-      if(diceLuck.length===10){
-
-      }
-     
-  }, [input])
 
   function getNewDice() {
     if (crooked) {
@@ -66,12 +69,22 @@ const Dice = ({ crooked = true }) => {
     return Math.floor(Math.random() * 6) + 1;
   }
 
+  useEffect(() => {
+    if (
+      diceLucks.length === totalChances ||
+      currentPosition === gridSize * gridSize
+    ) {
+      setTimeout(() => {
+        navigate("/decision");
+      }, 800);
+    }
+  }, [diceLucks, currentPosition]);
+
   function getRecentDices(recentDices) {
     return diceLucks
       .map((ele, idx) => {
         return (
-          <div className='d-flex justify-content-between align-items-center'>
-            Roll {idx + 1} &nbsp;&nbsp;&nbsp;&nbsp;
+          <div className='d-flex justify-content-between align-items-center flex-row p-2'>
             <FontAwesomeIcon icon={diceMap[ele]} size='2x' />
           </div>
         );
@@ -87,19 +100,26 @@ const Dice = ({ crooked = true }) => {
       <div
         id='dice'
         onClick={() => {
-          if (!rolling) shuffelDice();
+          if (!rolling && diceLucks.length < totalChances) shuffelDice();
         }}
         className={`${rolling ? "dice-wobble" : ""}`}
       >
         <FontAwesomeIcon icon={diceMap[currentDice]} size='5x' />
       </div>
       <h3 className='pt-2'>Click dice to roll</h3>
-      <h4 className='pt-2'>Rolls remainins: {10 - diceLucks.length}</h4>
-      <div className='pt-3 d-flex flex-column justify-content-center align-items-center'>
+      <h4 className='pt-2'>
+        Rolls remainins: {totalChances - diceLucks.length}
+      </h4>
+      <div className='pt-3 d-flex flex-column justify-content-center align-items-center w-75'>
         <h4>
           <u>Recent Rolls</u>
         </h4>
-        <div className='d-flex flex-column'>{getRecentDices(diceLucks)}</div>
+        <div
+          className='d-flex flex-row flex-wrap justify-content-center'
+          style={{ maxWidth: "200px" }}
+        >
+          {getRecentDices(diceLucks)}
+        </div>
       </div>
     </div>
   );

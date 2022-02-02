@@ -5,6 +5,7 @@ import { StoreProvider, createStore } from "easy-peasy";
 import baseStore from "./redux/baseStore";
 import Home from "./components/home/Home";
 import Game from "./components/game/Game";
+import Decision from "./components/decision/Decision";
 
 const store = createStore(baseStore);
 
@@ -15,6 +16,7 @@ const AppRoutes = () => {
         <Routes>
           <Route path='/' exact element={<Home />} />
           <Route path='/game' exact element={<Game />} />
+          <Route path='/decision' exact element={<Decision />} />
           <Route path='*' element={<Home />} />
         </Routes>
       </HashRouter>
