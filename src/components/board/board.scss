@@ -1,22 +1,29 @@
-#board {
-  .cell {
-    width: calc(10vh - 10px);
-    height: calc(10vh - 10px);
-    margin: 1px;
-    background-color: red;
-    color: var(--background-color);
+#board-container {
+  // transform: rotateX(24deg) rotateZ(-25deg);
+  // transform-origin: 0, 0;
+  // perspective: 10px;
+  #board {
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px #0005;
+    overflow: hidden;
+    .cell {
+      width: calc(10vh - 10px);
+      height: calc(10vh - 10px);
+      margin: 1px;
+      color: var(--background-color);
 
-    &.odd {
-      background-color: white;
-    }
-    &.even {
-      background-color: #518297;
-    }
-    span {
-      font-size: 0.5em;
-    }
-    &.active {
-      font-size: 1em;
+      &.odd {
+        background-color: white;
+      }
+      &.even {
+        background-color: #c0c0c0;
+      }
+      span {
+        font-size: 0.5em;
+      }
+      &.active {
+        font-size: 1em;
+      }
     }
   }
 }
