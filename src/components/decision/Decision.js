@@ -12,6 +12,7 @@ const Decision = () => {
   const totalChances = useStoreState((state) => state.totalChances);
   const navigate = useNavigate();
 
+  // Check if there is any condition available to show decision else redirect to home
   useEffect(() => {
     if (
       currentPosition < gridSize * gridSize &&

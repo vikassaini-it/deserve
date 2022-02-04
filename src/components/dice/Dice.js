@@ -12,7 +12,7 @@ import {
 import { useStoreState, useStoreActions } from "easy-peasy";
 import { useNavigate } from "react-router-dom";
 
-const Dice = () => {
+const Dice = ({ initCurrPos = 1 }) => {
   const [rolling, setRolling] = useState(false);
   const [currentDice, setCurrentDice] = useState(1);
   const setPosition = useStoreActions((actions) => actions.setCurrentPosition);
@@ -25,6 +25,7 @@ const Dice = () => {
   const crooked = useStoreState((state) => state.crookedDice);
   const navigate = useNavigate();
 
+  // Dice Map to show fontAwesome's dice images
   const diceMap = {
     1: faDiceOne,
     2: faDiceTwo,
@@ -34,10 +35,13 @@ const Dice = () => {
     6: faDiceSix,
   };
 
+  // init initial posiiton for player, defaulted to 1
   useLayoutEffect(() => {
-    setPosition(1);
+    setPosition(initCurrPos);
   }, []);
 
+  // triggered on used click
+  // disables the user click and execute animation, generate new dice and enable user click
   function shuffelDice() {
     setRolling(true);
     setTimeout(() => {
@@ -54,6 +58,7 @@ const Dice = () => {
     }, 500);
   }
 
+  // Snake's head collosion detection
   useEffect(() => {
     if (currentPosition === snake?.head) {
       setTimeout(() => {
@@ -62,6 +67,7 @@ const Dice = () => {
     }
   }, [currentPosition]);
 
+  // generate new dice based on crooked parameter
   function getNewDice() {
     if (crooked) {
       return (Math.floor(Math.random() * 3) + 1) * 2;
@@ -69,6 +75,7 @@ const Dice = () => {
     return Math.floor(Math.random() * 6) + 1;
   }
 
+  // Check the win or lose condition based on player position and dice collection
   useEffect(() => {
     if (
       diceLucks.length === totalChances ||
@@ -80,6 +87,7 @@ const Dice = () => {
     }
   }, [diceLucks, currentPosition]);
 
+  // generate css for dice history
   function getRecentDices(recentDices) {
     return diceLucks
       .map((ele, idx) => {

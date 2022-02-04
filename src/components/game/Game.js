@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const Game = () => {
   const navigate = useNavigate();
   return (
-    <div id='game' className='d-flex flex-row justify-content-start pt-3'>
+    <div id='game' className='d-flex flex-row  justify-content-start pt-3'>
       <div className='mx-5 d-flex flex-column justify-content-between align-items-center'>
         <h3>SNAKES AND LADERS</h3>
         <img src={Snake}></img>
@@ -23,9 +23,6 @@ const Game = () => {
       </div>
       <Board />
       <Player />
-      {/* 
-      <Score />
-      */}
       <Dice />
     </div>
   );

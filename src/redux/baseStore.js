@@ -1,5 +1,6 @@
 import { action } from "easy-peasy";
 
+// easy-peasy store - wrapper for redux
 export default {
   //--------------------------------------------------------------------------------------------------
   //												STATE
@@ -10,7 +11,7 @@ export default {
   totalChances: 20,
   crookedDice: false,
   snake: {
-    head: Math.floor(Math.random() * 50 + 49),
+    head: Math.floor(Math.random() * 50 + 51),
     tail: Math.floor(Math.random() * 48 + 2),
   },
 

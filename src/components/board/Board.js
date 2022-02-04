@@ -11,19 +11,21 @@ const Board = () => {
   const snake = useStoreState((state) => state.snake);
   const [grid, setGrid] = useState(<></>);
 
+  // Draw board with alternating row
+  // Todo: convert to css grid if possible
   useEffect(() => {
     let newGrid = [...new Array(gridSize)].map((ele, index1) => {
-      console.log(index1, gridSize);
       return (
         <div
+          key={`${Math.random()}`}
           className={`d-flex justify-content-center ${
             index1 % 2 === 1 ? "flex-row-reverse" : ""
           }`}
         >
           {[...new Array(gridSize)].map((ele, index2) => {
-            console.log(index2);
             return (
               <div
+                key={`${Math.random()}`}
                 className={`d-flex justify-content-end cell position-relative p-1 ${
                   (gridSize * index1 + index2 + 1) % 2 === 0 ? "even" : "odd"
                 }`}

@@ -9,34 +9,47 @@ const Player = ({ id }) => {
   const [width, setWidth] = useState(50);
   const currentPosition = useStoreState((state) => state.currentPosition);
 
+  // init resize observer for window resizing
   const resizeObserver = new ResizeObserver((entries) => {
     calculatePosition();
   });
 
+  // bind resize observer to board size
   useEffect(() => {
-    resizeObserver.observe(document.getElementById("board"));
+    if (resizeObserver)
+      resizeObserver.observe(document.getElementById("board"));
     return () => {
       // resizeObserver.
     };
   }, [currentPosition]);
 
+  // caclulate new position coordite when current position changes
   useLayoutEffect(() => {
     if (currentPosition) calculatePosition();
   }, [currentPosition]);
 
+  // position calculation logic
   function calculatePosition() {
     if (currentPosition != null) {
       setCurrentPositionTop(
-        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().top
+        document
+          .getElementById(`CELL_${currentPosition}`)
+          ?.getBoundingClientRect().top
       );
       setCurrentPositionLeft(
-        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().left
+        document
+          .getElementById(`CELL_${currentPosition}`)
+          ?.getBoundingClientRect().left
       );
       setWidth(
-        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().width
+        document
+          .getElementById(`CELL_${currentPosition}`)
+          ?.getBoundingClientRect().width
       );
       setHeight(
-        document.getElementById(`CELL_${currentPosition}`)?.getBoundingClientRect().height
+        document
+          .getElementById(`CELL_${currentPosition}`)
+          ?.getBoundingClientRect().height
       );
     }
   }
