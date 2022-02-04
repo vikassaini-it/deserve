@@ -115,20 +115,24 @@ const Dice = ({ initCurrPos = 1 }) => {
         <FontAwesomeIcon icon={diceMap[currentDice]} size='5x' />
       </div>
       <h3 className='pt-2'>Click dice to roll</h3>
+      {crooked ? <span>Dice is crooked</span> : null}
+
       <h4 className='pt-2'>
         Rolls remainins: {totalChances - diceLucks.length}
       </h4>
-      <div className='pt-3 d-flex flex-column justify-content-center align-items-center w-75'>
-        <h4>
-          <u>Recent Rolls</u>
-        </h4>
-        <div
-          className='d-flex flex-row flex-wrap justify-content-center'
-          style={{ maxWidth: "200px" }}
-        >
-          {getRecentDices(diceLucks)}
+      {diceLucks?.length > 0 ? (
+        <div className='pt-3 d-flex flex-column justify-content-center align-items-center w-75'>
+          <h4>
+            <u>Recent Rolls</u>
+          </h4>
+          <div
+            className='d-flex flex-row flex-wrap justify-content-center'
+            style={{ maxWidth: "200px" }}
+          >
+            {getRecentDices(diceLucks)}
+          </div>
         </div>
-      </div>
+      ) : null}
     </div>
   );
 };
