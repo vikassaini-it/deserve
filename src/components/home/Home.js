@@ -34,6 +34,7 @@ const Home = () => {
       id='home'
       className='d-flex flex-column justify-content-center align-items-center p-3'
     >
+      <h1>SNAKES & LADDERS</h1>
       <img src={Snake}></img>
       <h2 className='mt-3'>Lets play</h2>
 
