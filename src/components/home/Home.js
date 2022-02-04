@@ -16,9 +16,17 @@ const Home = () => {
   const crookedDice = useStoreState((state) => state.crookedDice);
 
   const navigate = useNavigate();
+  // reset position and dice history
   useEffect(() => {
     setPosition(null);
     setDiceLucks([]);
+    setSnake({
+      head: Math.floor(
+        Math.random() * ((gridSize * gridSize) / 2) +
+          ((gridSize * gridSize) / 2 + 1)
+      ),
+      tail: Math.floor(Math.random() * ((gridSize * gridSize) / 2 - 1) + 1),
+    });
   }, []);
 
   return (
@@ -42,8 +50,11 @@ const Home = () => {
           value={gridSize}
           onChange={(e) => {
             let newGridSize = Number(e.target.value);
+            // set grid size
             setGridSize(newGridSize);
+            // set total chances - hardness increases with increase in board size
             setTotalChances(newGridSize * 2);
+            // snake generation logic
             setSnake({
               head: Math.floor(
                 Math.random() * ((newGridSize * newGridSize) / 2) +
